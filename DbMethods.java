@@ -1,72 +1,64 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ import java.sql.SQLException;
+ import java.sql.Statement;
+
+
 public class DbMethods {
+    private static final String url= "jdbc:sqlite:C:/sqlite3/autodb";
 
-    final static String URL = "jdbc:sqlite:C:/sqlite3/autodb";
-   
-    public static void Register() {
-        try{
-            Class.forName("org.sqlite.JDBC");
-        }catch(ClassNotFoundException e){
-            System.out.println("Class not found exception: " + e.getMessage());
-        }
-       
-}
-public static Connection Connect(){
-    Connection conn = null;
-    try{
-        conn = DriverManager.getConnection(URL);
-    }catch(SQLException e){
-        System.out.println(e.getMessage());
-    }
-    return conn;
-}
-public static void Disconnect(Connection conn){
-    if(conn != null){
-        try{
-            conn.close();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-    }
-}
-public static void CommandExec(String command){
-    Connection conn = Connect();
-    try{
-        Statement s = conn.createStatement();
-        s.execute(command);
-    }catch(SQLException e){
-        System.out.println("Command" + command);
-        System.out.println(e.getMessage());
-    }
-        Disconnect(conn);
-   
-}
-public static void ReadALLData(){
-    String rendszam="";
-    String tipus="";
-    String szin="";
-    String tulaj="";
-    int kor=0;
-    int ar=0;
-    String sqlp = "SELECT Rendszam, Tipus, Szin, Tulaj, Kor, Ar FROM Auto";
-    Connection conn = Connect();
+    public static void Register(){
 
-    System.out.println("Autó tábla\n");
-    try{
-        Statement statement = conn.createStatement();
-        ResultSet result_set = statement.executeQuery(sqlp);
-        while(result_set.next()){
-            rendszam = result_set.getString("Rendszam");
-            tipus = result_set.getString("Tipus");
-            szin = result_set.getString("Szin");
-            tulaj = result_set.getString("Tulaj");
-            kor = result_set.getInt("Kor");
-            ar = result_set.getInt("Ar");
-            System.out.println(rendszam + "\t" + tipus + "\t" + szin + "\t" + tulaj + "\t" + kor + "\t" + ar);
+        try{
+            Class.forName(className "org.sqlite.JDBC");
+
+        } 
+        catch (ClassNotFoundException e){
+            System.out.println("SQLite JDBC driver nem található: " + e.getMessage());
         }
-    }catch(SQLException e){
-        System.out.println(e.getMessage());
+
+        String sql =
+        "CREATE TABLE IF NOT EXIST Auto(" + "Rendszam char PRIMARY KEY," + "Tipus char NOT NULL," + "sZIN CHAR NOT NULL," + "Kor INTEGER NOT NULL,"+"Ár INTEGER NOT NULL,"+ "Tulaj char NOT NULL"+");";
+
+        try (Connection conn = Connect();
+        Statement st=conn.createStatement()){
+            st.execute(sql);
+        }catch (SQLException e){
+            System.out.println("Register hiba" +e.getMessage());
+        }
     }
-    DisConnect(conn);
-}
+    public static Connection Connet() throws SQLException {
+        return DriverManager.getConnection(url);
+    }
+
+    public static void ReadAllData(){
+        String sql="SELECT Rendszam, Tipus, Szin, Kor, Ar, Tulaj FROM Auto ORDER BY Rendszam";
+
+        try (Connection conn = Connect();
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery(sql)){
+             System.out.println("\nRendszer\tTipus\tSzin\tKor\tAr\tTulaj");
+            System.out.println("-------------------------------------");
+
+            while (rs.next()){
+                System.out.println(
+                    rs.getString(columnLabel: "Rendszam")+ "\t"+
+                    rs.getString(columnLabel: "Tipus") +"\t"+
+                    rs.getString(columnLabel: "Szin")+ "\t"+
+                    rs.getString(columnLabel: "Kor")+ "\t"+
+                    rs.getString(columnLabel: "Ar")+ "\t"+
+                    rs.getString(columnLabel: "Tulaj")
+                );
+            }
+        }
+        catch (SQLException e){
+            System.out.println("ReadAll hiba: "+ e.getMessage());
+        }
+    }
+    public static void Insert(String rendszam, String tipus, String szin, int kor, int ar, String tulaj) {
+        String sql ="INSERT INTO Auot(Rendszam, Tipus, Szin, Kor, Ar, Tulaj) VALUES(?,?,?,?,?,?)";
+        
+    }
 }

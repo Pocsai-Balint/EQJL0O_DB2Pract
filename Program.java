@@ -15,23 +15,28 @@ public class Program {
             
             switch (choice){
                 case 1:
-                    String rendszam = cm.readString("Kérem a rendszámot:");
-                    String tipus = cm.readString("Kérem a tipust:");
-                    String szin = cm.readString("Kérem a színt:");
-                    int kor = cm.readInt("Kérem a kort:");
-                    int ar = cm.readInt("Kérem az árat:");
-                    String tulaj = cm.readString("Kérem a tulajdonost");
+                    String rendszam =cm.readstring("Kérem a rendszámot:");
+                    String tipus =cm.readstring("Kérem a tipust:");
+                    String szin =cm.readstring("Kérem a szin:");
+                    int kor =cm.readInt("Kérem a kort: ");
+                    int ar =cm.readInt("Kérem az árat: ");
+                    String tulaj =cm.readstring("Kérem a tulajdonost:");
                     DbMethods.Insert(rendszam, tipus, szin, kor, ar, tulaj);
                     break;
                 
                 case 2:
-                    String r2 =cm.ReadString("Kérem a rendszámot:")
+                String r2 =cm.readstring("Kérem a rendszámot:");
+
+
+
+                    
                     int ujAr =cm.readInt("Kérem az új árat: ");
-                    DbMethods.UpdateData(r2, ujAr);
+                    DbMethods.UpdatedData(r2, ujAr);
                     break;
 
                 case 3:
-                    String r3 =cm.readString("Kérem a rendszámot: ");
+                    String r3 =cm.readstring("Kérem a rendszámot:");
+                    
                     DbMethods.DeleteData(r3);
                     break;
 

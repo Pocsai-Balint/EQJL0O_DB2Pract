@@ -87,7 +87,6 @@ public class Program {
                     DbMethods.InsertKolcsonzes(konyvID, nev, datum, dij);
                     break;
                 case 2:
-                    // Megjegyzés: Ehhez szükséged lesz egy ListKolcsonzesek metódusra a DbMethods-ban!
                     listKolcsonzesek(); 
                     break;
                 case 0:

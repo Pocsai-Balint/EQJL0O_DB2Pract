@@ -19,7 +19,7 @@ public class Program {
                     String cim = cm.readString("Cím:");
                     String szerzo = cm.readString("Szerző:");
                     String mufaj = cm.readString("Műfaj:");
-                    int ev = cm.readInt("Kiadás éve:");
+                    int ev = cm.readInt("Kiadás éve(ÉÉÉÉ-HH-NN):");
                     int ar = cm.readInt("Ár:");
 
                     DbMethods.InsertKonyv(cim, szerzo, mufaj, ev, ar);

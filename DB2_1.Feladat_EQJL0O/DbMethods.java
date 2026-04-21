@@ -153,4 +153,25 @@ public static void InsertKolcsonzes(int konyvID, String nev, String datum, int d
     Disconnect(conn);
 }
 
+ private static void listKolcsonzesek() {
+        String sql = "SELECT * FROM Kolcsonzes";
+        try (Connection conn = DbMethods.Connect();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            
+            System.out.println("\n--- AKTÍV KÖLCSÖNZÉSEK ---");
+            System.out.println("ID | KönyvID | Név | Dátum | Díj");
+            while (rs.next()) {
+                System.out.println(
+                    rs.getInt("KolcsonzesID") + " | " +
+                    rs.getInt("KonyvID") + " | " +
+                    rs.getString("KolcsonzoNev") + " | " +
+                    rs.getString("KolcsonzesDatum") + " | " +
+                    rs.getInt("Dij") + " Ft"
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Hiba: " + e.getMessage());
+        }
+    }
 }

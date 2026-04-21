@@ -64,7 +64,6 @@ public class DbMethods {
         ResultSet rs = st.executeQuery(sql);
 
         System.out.println("\n--- KÖNYVEK ADATAI ---");
-        // Fejléc a jobb olvashatóságért
         System.out.println("Cím | Szerző | Műfaj | Kiadás éve | Ár");
         System.out.println("---------------------------------------");
 
